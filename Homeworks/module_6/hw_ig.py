@@ -5,7 +5,7 @@
 
 def merge_elems(*elems):
     for elem in elems:
-        if hasattr(elem, "__iter__") and (hasattr(elem, "__next__") or not len(elem) == 1):
+        if hasattr(elem, "__iter__") and not (type(elem) == str and len(elem) == 1):
             yield from merge_elems(*elem)
         else:
             yield elem
@@ -16,8 +16,9 @@ a = [1, 2, 3]
 b = 6
 c = 'zhaba'
 d = [[1, 2], [3, 4]]
+e = [1]
 
-for _ in merge_elems(a, b, c, d):
+for _ in merge_elems(a, b, c, d, e):
     print(_, end=' ')
 
 # output: 1 2 3 6 z h a b a 1 2 3 4
