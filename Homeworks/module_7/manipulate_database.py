@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from setup_database import Film
 from setup_database import db_name
 
-engine = create_engine("sqlite:///" + db_name, echo=True)
+engine = create_engine("sqlite:///{}.db".format(db_name), echo=True)
 Session = sessionmaker(bind=engine)
 session = Session()
 
