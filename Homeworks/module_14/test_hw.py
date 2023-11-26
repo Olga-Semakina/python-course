@@ -7,27 +7,13 @@ def test_login(init_driver, user_test_data):
     main_page = MainPage(init_driver)
     login_page = main_page.open_login()
 
-    try:
-        login_page.login_field
-    except Exception as e:
-        pytest.fail(f"Username element wasn't found: {e}")
-
-    try:
-        login_page.password_field
-    except Exception as e:
-        pytest.fail(f"Password element wasn't found: {e}")
+    assert login_page.login_field, f"Username element wasn't found"
+    assert login_page.password_field, f"Password element wasn't found"
 
     logged_main_page = login_page.login(*user_test_data)
 
-    try:
-        assert logged_main_page.header.user_field.get_text() == f'Welcome {user_test_data[0]}'
-    except Exception as e:
-        pytest.fail(f"Username element wasn't found: {e}")
-
-    try:
-        assert logged_main_page.header.logout_field
-    except Exception as e:
-        pytest.fail(f"Log out element wasn't found: {e}")
+    assert logged_main_page.header.user_field.get_text() == f'Welcome {user_test_data[0]}', "Username element wasn't found"
+    assert logged_main_page.header.logout_field.get_text(), "Logout element wasn't found"
 
 
 def test_add_to_cart(logged_user, monitor_test_data):
